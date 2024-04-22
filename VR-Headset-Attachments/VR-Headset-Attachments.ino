@@ -5,18 +5,18 @@ Servo servoThroat;
 Servo servoLeftEar;
 Servo servoRightEar;
 
-const int servoNapePin = 3;
-const int servoThroatPin = 5;
-const int servoLeftEarPin = 6;
+const int servoNapePin = 6;
+const int servoThroatPin = 7;
+const int servoLeftEarPin = 8;
 const int servoRightEarPin = 9;
-const int fanPin = 11;
+const int fanPin = 10;
 
 const int buttonNape = 2;
-const int buttonThroat = 4;
-const int buttonLeftEar = 7;
-const int buttonRightEar = 8;
-const int buttonFan = 10;
-const int buttonStart = 12;
+const int buttonThroat = 3;
+const int buttonLeftEar = 4;
+const int buttonRightEar = 5;
+const int buttonFan = 6;
+const int buttonStart = 7;
 
 bool servoNapeState = false;
 bool servoThroatState = false;
@@ -48,53 +48,50 @@ void setup() {
 void loop() {
   if (digitalRead(buttonStart) == HIGH) {
     resetTime();
+    waitForButtonRelease(buttonStart);
   }
 
-  if (digitalRead(buttonNape) == HIGH) {
-    toggleServo(servoNape, servoNapeState, buttonNape);
-    Serial.println("Nape Servo Activated");
-  }
-
-  if (digitalRead(buttonThroat) == HIGH) {
-    toggleServo(servoThroat, servoThroatState, buttonThroat);
-    Serial.println("Throat Servo Activated");
-  }
-
-  if (digitalRead(buttonLeftEar) == HIGH) {
-    toggleServo(servoLeftEar, servoLeftEarState, buttonLeftEar);
-    Serial.println("Left Ear Servo Activated");
-  }
-
-  if (digitalRead(buttonRightEar) == HIGH) {
-    toggleServo(servoRightEar, servoRightEarState, buttonRightEar);
-    Serial.println("Right Ear Servo Activated");
-  }
+  checkButtonAndToggle(buttonNape, servoNape, servoNapeState);
+  checkButtonAndToggle(buttonThroat, servoThroat, servoThroatState);
+  checkButtonAndToggle(buttonLeftEar, servoLeftEar, servoLeftEarState);
+  checkButtonAndToggle(buttonRightEar, servoRightEar, servoRightEarState);
 
   if (digitalRead(buttonFan) == HIGH) {
     toggleFan(fanState, buttonFan);
-    Serial.println("Fan Toggled");
   }
+
+  delay(10);
 }
 
-void toggleServo(Servo &servo, bool &state, int buttonPin) {
-  state = !state;
-  servo.write(state ? 180 : 0);
-  buttonRelease(buttonPin);
+void checkButtonAndToggle(int buttonPin, Servo &servo, bool &state) {
+  if (digitalRead(buttonPin) == HIGH) {
+    delay(50); // Simple debounce
+    state = !state;
+    servo.write(state ? 180 : 0);
+    printTime();
+    Serial.println("Servo at pin " + String(buttonPin) + " toggled");
+    waitForButtonRelease(buttonPin);
+  }
 }
 
 void toggleFan(bool &state, int buttonPin) {
   state = !state;
   digitalWrite(fanPin, state ? HIGH : LOW);
-  buttonRelease(buttonPin);
+  Serial.println("Fan Toggled");
+  waitForButtonRelease(buttonPin);
 }
 
 void resetTime() {
   currentTime = millis();
+  printTime();
   Serial.println("Starting Record");
 }
 
-void buttonRelease(int buttonPin) {
-  while (digitalRead(buttonPin) == HIGH) {
-  }
-  delay(10);
+void waitForButtonRelease(int buttonPin) {
+  while (digitalRead(buttonPin) == HIGH) {} // Wait for release
+}
+
+void printTime(){
+  Serial.print(millis() - currentTime);
+  Serial.print(" s ");
 }
