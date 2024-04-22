@@ -1,1 +1,1 @@
-# VR-Headset-Interactive-Attatchments
+# VR-Headset-Interactive-Attachments
