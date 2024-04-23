@@ -1,25 +1,21 @@
 #include <Servo.h>
 
 Servo servoNape;
-Servo servoThroat;
 Servo servoLeftEar;
 Servo servoRightEar;
 
-const int servoNapePin = 6;
-//const int servoThroatPin = 7;
+const int buttonNape = 2;
+const int buttonLeftEar = 3;
+const int buttonRightEar = 4;
+const int buttonFan = 5;
+const int buttonStart = 6;
+
+const int servoNapePin = 7;
 const int servoLeftEarPin = 8;
 const int servoRightEarPin = 9;
 const int fanPin = 10;
 
-const int buttonNape = 2;
-//const int buttonThroat = 3;
-const int buttonLeftEar = 4;
-const int buttonRightEar = 5;
-const int buttonFan = 6;
-const int buttonStart = 7;
-
 bool servoNapeState = false;
-//bool servoThroatState = false;
 bool servoLeftEarState = false;
 bool servoRightEarState = false;
 bool fanState = false;
@@ -30,7 +26,6 @@ void setup() {
   Serial.begin(9600);
 
   servoNape.attach(servoNapePin);
-  //servoThroat.attach(servoThroatPin);
   servoLeftEar.attach(servoLeftEarPin);
   servoRightEar.attach(servoRightEarPin);
 
@@ -38,7 +33,6 @@ void setup() {
   digitalWrite(fanPin, LOW);
 
   pinMode(buttonNape, INPUT);
-  //pinMode(buttonThroat, INPUT);
   pinMode(buttonLeftEar, INPUT);
   pinMode(buttonRightEar, INPUT);
   pinMode(buttonFan, INPUT);
@@ -52,7 +46,6 @@ void loop() {
   }
 
   checkButtonAndToggle(buttonNape, servoNape, servoNapeState);
-  //checkButtonAndToggle(buttonThroat, servoThroat, servoThroatState);
   checkButtonAndToggle(buttonLeftEar, servoLeftEar, servoLeftEarState);
   checkButtonAndToggle(buttonRightEar, servoRightEar, servoRightEarState);
 

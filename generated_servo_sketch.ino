@@ -1,17 +1,22 @@
 #include <Servo.h>
 
-Servo servoNape, servoThroat, servoLeftEar, servoRightEar;
+Servo servoNape, servoLeftEar, servoRightEar;
 
 const int fanPin = 10; // Define the fan pin
+const int buttonStart = 6; // Define the start button
+
 void setup() {
-  servoNape.attach(6);
-  servoThroat.attach(7);
+  servoNape.attach(7);
   servoLeftEar.attach(8);
   servoRightEar.attach(9);
   pinMode(fanPin, OUTPUT);
+  pinMode(buttonStart, OUTPUT);
 }
 
 void loop() {
+   while (digitalRead(startButton) == LOW) { //wait for start button
+       delay(10);
+   }
   delay(0);
   delay(2331);
   digitalWrite(10, HIGH);

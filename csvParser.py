@@ -28,17 +28,20 @@ def generate_arduino_code(csv_filename, output_filename):
 
     with open(output_filename, 'w') as file:
         file.write('#include <Servo.h>\n\n')
-        file.write('Servo servoNape, servoThroat, servoLeftEar, servoRightEar;\n\n')
+        file.write('Servo servoNape, servoLeftEar, servoRightEar;\n\n')
         file.write('const int fanPin = 10; // Define the fan pin\n')
+        file.write('const int buttonStart = 6; // Define the start button\n\n')
         file.write('void setup() {\n')
-        file.write('  servoNape.attach(6);\n')
-        #file.write('  servoThroat.attach(7);\n')
+        file.write('  servoNape.attach(7);\n')
         file.write('  servoLeftEar.attach(8);\n')
         file.write('  servoRightEar.attach(9);\n')
         file.write('  pinMode(fanPin, OUTPUT);\n')
+        file.write('  pinMode(buttonStart, OUTPUT);\n')
         file.write('}\n\n')
         file.write('void loop() {\n')
-
+        file.write('   while (digitalRead(startButton) == LOW) { //wait for start button\n')
+        file.write('       delay(10);\n')
+        file.write('   }\n')
         for delay_time, button, position, message in servo_controls:
             file.write(f'  delay({delay_time});\n')
             if "fan" in message:
