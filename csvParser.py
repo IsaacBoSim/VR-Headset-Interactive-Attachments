@@ -32,7 +32,7 @@ def generate_arduino_code(csv_filename, output_filename):
         file.write('const int fanPin = 10; // Define the fan pin\n')
         file.write('void setup() {\n')
         file.write('  servoNape.attach(6);\n')
-        file.write('  servoThroat.attach(7);\n')
+        #file.write('  servoThroat.attach(7);\n')
         file.write('  servoLeftEar.attach(8);\n')
         file.write('  servoRightEar.attach(9);\n')
         file.write('  pinMode(fanPin, OUTPUT);\n')
