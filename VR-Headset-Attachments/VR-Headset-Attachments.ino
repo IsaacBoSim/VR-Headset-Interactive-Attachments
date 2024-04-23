@@ -69,22 +69,30 @@ void checkButtonAndToggle(int buttonPin, Servo &servo, bool &state) {
     state = !state;
     servo.write(state ? 180 : 0);
     printTime();
-    Serial.println("Servo at pin " + String(buttonPin) + " toggled");
+    printMessage(buttonPin);
     waitForButtonRelease(buttonPin);
+    Serial.print(" servo , ");
+    Serial.println(state ? "180" : "0");
+
   }
 }
 
 void toggleFan(bool &state, int buttonPin) {
   state = !state;
   digitalWrite(fanPin, state ? HIGH : LOW);
-  Serial.println("Fan Toggled");
+  printTime();
+  printMessage(buttonPin);
+  Serial.print(" fan , ");
+  Serial.println(state ? "HIGH" : "LOW");
   waitForButtonRelease(buttonPin);
+
 }
 
 void resetTime() {
   currentTime = millis();
   printTime();
-  Serial.println("Starting Record");
+  Serial.print(0);
+  Serial.println(", Starting, Recording");
 }
 
 void waitForButtonRelease(int buttonPin) {
@@ -93,5 +101,10 @@ void waitForButtonRelease(int buttonPin) {
 
 void printTime(){
   Serial.print(millis() - currentTime);
-  Serial.print(" s ");
+  Serial.print(", ");
+}
+
+void printMessage(int buttonPin){
+  Serial.print(String(buttonPin));
+  Serial.print(", button toggled");
 }
