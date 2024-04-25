@@ -4,7 +4,7 @@ import os
 
 try:
     # Open serial connection
-    serial_port = '/dev/cu.usbserial-14140'
+    serial_port = '/dev/cu.usbserial-1420'
     baud_rate = 9600
     with serial.Serial(serial_port, baud_rate, timeout=1) as ser:
         ser.flushInput()

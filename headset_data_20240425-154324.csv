@@ -1,0 +1,10 @@
+Timestamp (ms), Button, Message, Position
+0, 0, Starting,  Recording
+1208, 5, button toggled fan ,  HIGH
+4174, 2, button toggled servo ,  180
+13029, 3, button toggled servo ,  180
+16263, 3, button toggled servo ,  0
+21765, 3, button toggled servo ,  180
+28464, 2, button toggled servo ,  0
+42106, 3, button toggled servo ,  0
+42963, 3, button toggled servo ,  180
